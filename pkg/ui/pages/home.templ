@@ -1,0 +1,17 @@
+package pages
+
+import "echo.go.dev/pkg/ui/layouts"
+
+var homeLayout = layouts.Layout{
+  Title:      "Home",
+  ShowHeader: true,
+  BodyClass:  "",
+}
+
+templ Home() {
+  @layouts.Base(homeLayout) {
+    <div class="container mx-auto p-5">
+        <p class="owl-p">Home</p>
+    </div>
+  }
+}

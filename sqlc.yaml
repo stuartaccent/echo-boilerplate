@@ -1,0 +1,13 @@
+version: "2"
+sql:
+  - engine: "postgresql"
+    queries: "pkg/storage/db/sqlc/"
+    schema: "pkg/storage/db/migrations/"
+    database:
+      uri: postgresql://postgres:password@localhost:5432/echo-boilerplate
+    gen:
+      go:
+        package: "dbx"
+        out: "pkg/storage/db/dbx"
+        sql_package: "pgx/v5"
+        emit_empty_slices: true
