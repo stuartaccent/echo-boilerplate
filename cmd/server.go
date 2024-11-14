@@ -5,6 +5,7 @@ import (
 	"echo.go.dev/pkg/auth"
 	"echo.go.dev/pkg/home"
 	"echo.go.dev/pkg/static"
+	_http "echo.go.dev/pkg/transport/http"
 	"echo.go.dev/pkg/transport/middleware"
 	"echo.go.dev/pkg/transport/validate"
 	"errors"
@@ -47,6 +48,7 @@ func runServer() {
 	engine := echo.New()
 	engine.Debug = cfg.Server.Debug
 	engine.Validator = validate.New()
+	engine.HTTPErrorHandler = _http.ErrorHandler
 
 	engine.Use(
 		echomiddleware.Recover(),

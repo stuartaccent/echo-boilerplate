@@ -1,0 +1,22 @@
+package pages
+
+import (
+    "echo.go.dev/pkg/ui/layouts"
+    "fmt"
+)
+
+templ Error(code int, title, message string) {
+    @layouts.Base(layouts.Layout{
+        Title:      title,
+        ShowHeader: false,
+        BodyClass:  "p-4",
+    }) {
+        <div class="min-h-screen flex flex-col items-center justify-center">
+            <div class="max-w-[500px]">
+                <h1 class="owl-h1">{ fmt.Sprintf("%d", code) } <span class="text-base font-normal">{ title }</span></h1>
+                <p class="owl-p">{ message }</p>
+                <p class="owl-p"><a class="owl-anchor" href="/">Back to Home</a></p>
+            </div>
+        </div>
+    }
+}
