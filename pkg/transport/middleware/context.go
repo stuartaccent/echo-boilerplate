@@ -36,8 +36,12 @@ func Context(postgres *pgxpool.Pool) echo.MiddlewareFunc {
 		return func(c echo.Context) error {
 			htmx := &HTMX{Request: c.Request(), Response: c.Response()}
 			sess, err := session.Get("session", c)
+			// if there is a problem with the session try to reset it
 			if err != nil {
-				return err
+				sess.Options.MaxAge = -1
+				if err := sess.Save(c.Request(), c.Response()); err != nil {
+					return err
+				}
 			}
 			cc := &CustomContext{
 				Context:  c,
