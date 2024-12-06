@@ -77,6 +77,7 @@ type SecurityConfig struct {
 	ContentTypeNosniff    string   `mapstructure:"content_type_nosniff"`
 	XFrameOptions         string   `mapstructure:"x_frame_options"`
 	ContentSecurityPolicy string   `mapstructure:"content_security_policy"`
+	ReferrerPolicy        string   `mapstructure:"referrer_policy"`
 }
 
 // SessionConfig represents the session configuration.

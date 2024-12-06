@@ -14,6 +14,7 @@ func SecureMiddleware(cfg config.SecurityConfig) echo.MiddlewareFunc {
 		XFrameOptions:         cfg.XFrameOptions,
 		HSTSMaxAge:            cfg.HSTSMaxAge,
 		ContentSecurityPolicy: cfg.ContentSecurityPolicy,
+		ReferrerPolicy:        cfg.ReferrerPolicy,
 	}
 
 	return middleware.SecureWithConfig(secureConfig)

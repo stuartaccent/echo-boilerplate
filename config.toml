@@ -17,6 +17,7 @@ xss_protection = "1; mode=block"
 content_type_nosniff = "nosniff"
 x_frame_options = "SAMEORIGIN"
 content_security_policy = "default-src 'self'; script-src 'self'; object-src 'self'"
+referrer_policy = "strict-origin"
 
 [session]
 key = "13d45bf0a822b832cc8886fa41ce4ced30584189bad02ec8ce552ace0d1ae8b1"  # hex encoded 32 byte string
