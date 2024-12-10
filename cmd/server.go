@@ -53,12 +53,12 @@ func runServer() {
 	engine.Use(
 		echomiddleware.Recover(),
 		middleware.Logger(),
-		middleware.SecureMiddleware(cfg.Security),
-		middleware.CSRFMiddleware(cfg.Session),
-		middleware.CORSMiddleware(cfg.Security),
-		middleware.RateLimitMiddleware(),
-		echomiddleware.Gzip(),
-		middleware.SessionMiddleware(cfg.Session),
+		middleware.Secure(cfg.Security),
+		middleware.CSRF(cfg.Session),
+		middleware.CORS(cfg.Security),
+		middleware.RateLimit(),
+		middleware.Gzip(),
+		middleware.Session(cfg.Session),
 		middleware.Context(dbPool),
 	)
 

@@ -7,8 +7,8 @@ import (
 	"github.com/labstack/echo/v4"
 )
 
-// SessionMiddleware returns an Echo middleware function for the session.
-func SessionMiddleware(cfg config.SessionConfig) echo.MiddlewareFunc {
+// Session returns an Echo middleware function for the session.
+func Session(cfg config.SessionConfig) echo.MiddlewareFunc {
 	sessionStore := sessions.NewCookieStore(cfg.KeyBytes(), cfg.EncKeyBytes())
 
 	sessionStore.Options = &sessions.Options{

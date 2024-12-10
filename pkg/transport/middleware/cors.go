@@ -6,8 +6,8 @@ import (
 	"github.com/labstack/echo/v4/middleware"
 )
 
-// CORSMiddleware returns an Echo middleware function for cors.
-func CORSMiddleware(cfg config.SecurityConfig) echo.MiddlewareFunc {
+// CORS returns an Echo middleware function for cors.
+func CORS(cfg config.SecurityConfig) echo.MiddlewareFunc {
 	corsConfig := middleware.CORSConfig{
 		AllowOrigins: cfg.AllowedHosts,
 		AllowHeaders: []string{

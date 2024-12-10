@@ -6,8 +6,8 @@ import (
 	"github.com/labstack/echo/v4/middleware"
 )
 
-// SecureMiddleware returns an Echo middleware function for cors.
-func SecureMiddleware(cfg config.SecurityConfig) echo.MiddlewareFunc {
+// Secure returns an Echo middleware function for cors.
+func Secure(cfg config.SecurityConfig) echo.MiddlewareFunc {
 	secureConfig := middleware.SecureConfig{
 		XSSProtection:         cfg.XSSProtection,
 		ContentTypeNosniff:    cfg.ContentTypeNosniff,
@@ -15,6 +15,9 @@ func SecureMiddleware(cfg config.SecurityConfig) echo.MiddlewareFunc {
 		HSTSMaxAge:            cfg.HSTSMaxAge,
 		ContentSecurityPolicy: cfg.ContentSecurityPolicy,
 		ReferrerPolicy:        cfg.ReferrerPolicy,
+		Skipper: func(c echo.Context) bool {
+			return c.Path() == "/static*"
+		},
 	}
 
 	return middleware.SecureWithConfig(secureConfig)

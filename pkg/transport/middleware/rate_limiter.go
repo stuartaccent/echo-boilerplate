@@ -8,8 +8,8 @@ import (
 	"time"
 )
 
-// RateLimitMiddleware returns an Echo middleware function for rate limiting.
-func RateLimitMiddleware() echo.MiddlewareFunc {
+// RateLimit returns an Echo middleware function for rate limiting.
+func RateLimit() echo.MiddlewareFunc {
 	ratePaths := map[string]struct{}{
 		"POST:/auth/login": {},
 	}

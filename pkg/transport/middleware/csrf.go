@@ -6,8 +6,8 @@ import (
 	"github.com/labstack/echo/v4/middleware"
 )
 
-// CSRFMiddleware returns an Echo middleware function for csrf.
-func CSRFMiddleware(cfg config.SessionConfig) echo.MiddlewareFunc {
+// CSRF returns an Echo middleware function for csrf.
+func CSRF(cfg config.SessionConfig) echo.MiddlewareFunc {
 	csrfPaths := map[string]struct{}{
 		"/auth/login": {},
 	}
