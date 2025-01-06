@@ -46,7 +46,7 @@ func Error(code int, title, message string) templ.Component {
 				}()
 			}
 			ctx = templ.InitializeContext(ctx)
-			templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 1, "<div class=\"min-h-screen flex flex-col items-center justify-center\"><div class=\"max-w-[500px]\"><h1 class=\"owl-h1\">")
+			templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 1, "<div class=\"min-h-screen flex flex-col items-center justify-center p-5\"><div class=\"w-full max-w-[500px]\"><h1 class=\"owl-h1\">")
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}
@@ -94,7 +94,7 @@ func Error(code int, title, message string) templ.Component {
 		templ_7745c5c3_Err = layouts.Base(layouts.Layout{
 			Title:      title,
 			ShowHeader: false,
-			BodyClass:  "p-5",
+			BodyClass:  "",
 		}).Render(templ.WithChildren(ctx, templ_7745c5c3_Var2), templ_7745c5c3_Buffer)
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err

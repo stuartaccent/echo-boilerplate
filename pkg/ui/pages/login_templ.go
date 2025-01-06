@@ -21,7 +21,7 @@ type LoginData struct {
 var loginLayout = layouts.Layout{
 	Title:      "Login",
 	ShowHeader: false,
-	BodyClass:  "p-5",
+	BodyClass:  "",
 }
 
 func Login(d LoginData) templ.Component {
@@ -57,7 +57,7 @@ func Login(d LoginData) templ.Component {
 				}()
 			}
 			ctx = templ.InitializeContext(ctx)
-			templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 1, "<div class=\"min-h-screen flex flex-col items-center justify-center\"><div class=\"w-[350px] grid gap-10\"><h1 class=\"owl-h2\">")
+			templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 1, "<div class=\"min-h-screen flex flex-col items-center justify-center p-5\"><div class=\"w-full max-w-[350px] grid gap-10\"><h1 class=\"owl-h2\">")
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}
