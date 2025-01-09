@@ -13,7 +13,7 @@ func Secure(cfg config.SecurityConfig) echo.MiddlewareFunc {
 		ContentTypeNosniff:    cfg.ContentTypeNosniff,
 		XFrameOptions:         cfg.XFrameOptions,
 		HSTSMaxAge:            cfg.HSTSMaxAge,
-		ContentSecurityPolicy: cfg.ContentSecurityPolicy,
+		ContentSecurityPolicy: cfg.CSP(),
 		ReferrerPolicy:        cfg.ReferrerPolicy,
 		Skipper: func(c echo.Context) bool {
 			return c.Path() == "/static*"

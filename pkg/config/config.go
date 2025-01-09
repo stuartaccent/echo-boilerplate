@@ -71,13 +71,17 @@ type DatabaseConfig struct {
 
 // SecurityConfig represents the security configuration.
 type SecurityConfig struct {
-	AllowedHosts          []string `mapstructure:"allowed_hosts"`
-	HSTSMaxAge            int      `mapstructure:"hsts_max_age"`
-	XSSProtection         string   `mapstructure:"xss_protection"`
-	ContentTypeNosniff    string   `mapstructure:"content_type_nosniff"`
-	XFrameOptions         string   `mapstructure:"x_frame_options"`
-	ContentSecurityPolicy string   `mapstructure:"content_security_policy"`
-	ReferrerPolicy        string   `mapstructure:"referrer_policy"`
+	AllowedHosts       []string `mapstructure:"allowed_hosts"`
+	HSTSMaxAge         int      `mapstructure:"hsts_max_age"`
+	XSSProtection      string   `mapstructure:"xss_protection"`
+	ContentTypeNosniff string   `mapstructure:"content_type_nosniff"`
+	XFrameOptions      string   `mapstructure:"x_frame_options"`
+	ReferrerPolicy     string   `mapstructure:"referrer_policy"`
+	CSPDefaultSrc      string   `mapstructure:"csp_default_src"`
+	CSPScriptSrc       string   `mapstructure:"csp_script_src"`
+	CSPStyleSrc        string   `mapstructure:"csp_style_src"`
+	CSPImgSrc          string   `mapstructure:"csp_img_src"`
+	CSPFontSrc         string   `mapstructure:"csp_font_src"`
 }
 
 // SessionConfig represents the session configuration.
@@ -103,6 +107,13 @@ func (c DatabaseConfig) URL() *url.URL {
 		Path:     c.Db,
 		RawQuery: query.Encode(),
 	}
+}
+
+func (c SecurityConfig) CSP() string {
+	return fmt.Sprintf(
+		"default-src %s; script-src %s; style-src %s; img-src %s; font-src %s",
+		c.CSPDefaultSrc, c.CSPScriptSrc, c.CSPStyleSrc, c.CSPImgSrc, c.CSPFontSrc,
+	)
 }
 
 // KeyBytes returns the session key as a byte array.
