@@ -40,7 +40,7 @@ func loginForm(c echo.Context) error {
 		return err
 	}
 	return cc.RenderComponent(http.StatusOK, pages.Login(pages.LoginData{
-		Csrf: c.Get("csrf").(string),
+		CsrfToken: c.Get("csrf").(string),
 	}))
 }
 
@@ -51,8 +51,8 @@ func login(c echo.Context) error {
 
 	invalid := func() error {
 		return cc.RenderComponent(http.StatusOK, pages.Login(pages.LoginData{
-			Error: "invalid email address or password",
-			Csrf:  c.Get("csrf").(string),
+			Error:     "invalid email address or password",
+			CsrfToken: c.Get("csrf").(string),
 		}))
 	}
 

@@ -7,7 +7,7 @@ import (
 
 type LoginData struct {
 	Error string
-	Csrf  string
+	CsrfToken  string
 }
 
 var loginLayout = layouts.Layout{
@@ -19,15 +19,7 @@ var loginLayout = layouts.Layout{
 templ Login(d LoginData) {
 	@layouts.Base(loginLayout) {
 		<div class="min-h-screen flex flex-col items-center justify-center p-5">
-			<div class="w-full max-w-[350px] grid gap-10">
-				<h1 class="owl-h2">{ loginLayout.Title }</h1>
-				<form id="form" class="grid gap-6" method="post" hx-post="/auth/login" hx-select="#form" hx-swap="outerHTML">
-					@components.Csrf(d.Csrf)
-					@components.Input("email", "Email address", "email", "", "", "", true)
-					@components.Input("password", "Password", "password", "", "", d.Error, true)
-					@components.Submit("Login")
-				</form>
-			</div>
+			@components.LoginForm(d.CsrfToken, d.Error)
 		</div>
 	}
 }
