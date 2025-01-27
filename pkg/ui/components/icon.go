@@ -2,13 +2,12 @@ package components
 
 import (
 	"github.com/a-h/templ"
-	"github.com/accentdesign/gtml"
+	. "github.com/accentdesign/gtml"
 )
 
-func Icon(icon, class string) templ.Component {
-	svg := gtml.Element{
+func Icon(icon, class string) *Element {
+	return &Element{
 		Tag:   "owl-icon",
-		Attrs: gtml.Attrs{"icon": icon, "class": templ.KV(class, class != "")},
+		Attrs: Attrs{"icon": icon, "class": templ.KV(class, class != "")},
 	}
-	return &svg
 }

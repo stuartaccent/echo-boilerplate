@@ -1,13 +1,12 @@
 package components
 
 import (
-	"github.com/a-h/templ"
-	"github.com/accentdesign/gtml"
+	. "github.com/accentdesign/gtml"
 )
 
-func LoginForm(csrfToken, err string) templ.Component {
-	return gtml.Form(
-		gtml.Attrs{
+func LoginForm(csrfToken, err string) *Element {
+	return Form(
+		Attrs{
 			"class":     "w-full max-w-[350px] grid gap-10",
 			"id":        "login-form",
 			"method":    "post",
@@ -15,14 +14,14 @@ func LoginForm(csrfToken, err string) templ.Component {
 			"hx-select": "#login-form",
 			"hx-swap":   "outerHTML",
 		},
-		gtml.Div(
-			gtml.NA,
-			gtml.H1(gtml.Attrs{"class": "owl-h2"}, gtml.Text("Login")),
-			gtml.P(gtml.Attrs{"class": "text-gray-500"}, gtml.Text("Access your account.")),
+		Div(
+			NA,
+			H1(Attrs{"class": "owl-h2"}, Text("Login")),
+			P(Attrs{"class": "text-muted-foreground"}, Text("Access your account.")),
 		),
 		Csrf(csrfToken),
-		Input("email", "Email", "email", "", "", "", true),
-		Input("password", "Password", "password", "", "", err, true),
+		FormInput("email", "Email", "email", "", "", "", true),
+		FormInput("password", "Password", "password", "", "", err, true),
 		Submit("Login"),
 	)
 }

@@ -1,6 +1,27 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+@import "tailwindcss";
+
+@theme {
+    --color-background: hsl(0 0% 100%);
+    --color-foreground: hsl(240 10% 3.9%);
+    --color-primary: hsl(240 5.9% 10%);
+    --color-primary-foreground: hsl(0 0% 98%);
+    --color-secondary: hsl(240 4.8% 95.9%);
+    --color-secondary-foreground: hsl(240 5.9% 10%);
+    --color-muted: hsl(240 4.8% 95.9%);
+    --color-muted-foreground: hsl(240 3.8% 46.1%);
+    --color-destructive: hsl(0 72.22% 50.59%);
+    --color-destructive-foreground: hsl(0 0% 98%);
+    --color-border: hsl(240 5.9% 90%);
+    --color-input: hsl(240 5.9% 90%);
+}
+
+/* base */
+
+@layer base {
+    body {
+        @apply antialiased bg-background text-foreground;
+    }
+}
 
 /* typography */
 
@@ -32,10 +53,10 @@
 
 @layer components {
     .owl-label {
-        @apply text-sm font-medium leading-none;
+        @apply inline-block text-sm font-medium leading-none cursor-pointer;
     }
     .owl-input, .owl-select, .owl-textarea {
-        @apply flex w-full rounded-md border px-3 py-2 text-sm;
+        @apply flex w-full rounded-md border border-input px-3 py-2 text-sm;
     }
     .owl-input {
         @apply h-10 file:border-0 file:bg-transparent file:text-sm file:font-medium;
@@ -47,23 +68,23 @@
         @apply min-h-[80px];
     }
     .owl-checkbox {
-        @apply size-4 shrink-0 rounded-sm border accent-black;
+        @apply size-4 shrink-0 rounded-sm border border-input accent-primary;
     }
     .owl-form-field {
         @apply space-y-2;
     }
     .owl-form-field-error {
-        @apply text-sm text-red-500;
+        @apply text-sm text-destructive;
     }
     .owl-form-field-description {
-        @apply text-sm text-gray-500;
+        @apply text-sm text-muted-foreground;
     }
     .owl-form-field:has(.owl-form-field-error) {
         .owl-label {
-            @apply text-red-500;
+            @apply text-destructive;
         }
         .owl-input, .owl-select, .owl-textarea, .owl-checkbox {
-            @apply border-red-500;
+            @apply border-destructive;
         }
     }
 }
@@ -72,25 +93,25 @@
 
 @layer components {
     .owl-button {
-        @apply inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md h-10 px-4 py-2 text-sm font-medium bg-black text-white hover:bg-black/80;
+        @apply inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md h-10 px-4 py-2 text-sm font-medium cursor-pointer bg-primary text-primary-foreground hover:bg-primary/80;
     }
     .owl-button-icon {
-        @apply size-10 p-0;
+        @apply size-10 p-0 text-base;
     }
     .owl-button-secondary {
-        @apply bg-gray-100 text-black hover:bg-gray-100/80;
+        @apply bg-secondary text-secondary-foreground hover:bg-secondary/80;
     }
     .owl-button-destructive {
-        @apply bg-red-500 text-white hover:bg-red-500/90;
+        @apply bg-destructive text-destructive-foreground hover:bg-destructive/90;
     }
     .owl-button-outline {
-        @apply bg-transparent text-black border hover:bg-gray-100/80;
+        @apply bg-transparent text-foreground border border-input hover:bg-secondary/80;
     }
     .owl-button-ghost {
-        @apply bg-transparent text-black hover:bg-gray-100/80;
+        @apply bg-transparent text-foreground hover:bg-secondary/80;
     }
     .owl-button-link {
-        @apply bg-transparent text-black hover:bg-transparent hover:underline hover:underline-offset-4;
+        @apply bg-transparent text-foreground hover:bg-transparent hover:underline hover:underline-offset-4;
     }
 }
 
@@ -101,7 +122,7 @@
         @apply relative inline-flex;
     }
     .owl-dropdown-menu-content {
-        @apply z-50 min-w-[8rem] overflow-hidden rounded-md border bg-white p-1 shadow-md w-56 absolute top-11;
+        @apply z-50 min-w-[8rem] overflow-hidden rounded-md border border-border bg-background p-1 shadow-md w-56 absolute top-11;
     }
     .owl-dropdown-menu-content:not(.owl-open) {
         @apply hidden;
@@ -110,9 +131,9 @@
         @apply px-2 py-1.5 text-sm font-semibold;
     }
     .owl-dropdown-menu-separator {
-        @apply -mx-1 my-1 h-px bg-gray-200;
+        @apply -mx-1 my-1 h-px bg-muted;
     }
     .owl-dropdown-menu-item {
-        @apply w-full relative flex select-none items-center rounded-sm px-2 py-1.5 text-sm outline-none hover:bg-gray-100;
+        @apply w-full relative flex select-none items-center rounded-sm px-2 py-1.5 text-sm outline-none hover:bg-secondary/80;
     }
 }

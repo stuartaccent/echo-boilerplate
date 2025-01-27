@@ -22,9 +22,9 @@ templ Base(l Layout) {
 			<script src="/static/js/main.js" defer></script>
 			<script src="/static/js/icons.js" defer></script>
 		</head>
-		<body class={ "antialiased", l.BodyClass }>
+		<body class={ l.BodyClass }>
 			if l.ShowHeader {
-				@components.Header()
+				@components.PageHeader()
 			}
 			{ children... }
 		</body>
