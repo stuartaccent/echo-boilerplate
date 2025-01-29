@@ -4,9 +4,9 @@ go 1.23
 
 require (
 	github.com/a-h/templ v0.3.819
-	github.com/accentdesign/gtml v0.0.3
+	github.com/accentdesign/gtml v0.0.6
 	github.com/go-playground/validator/v10 v10.24.0
-	github.com/golang-migrate/migrate/v4 v4.18.1
+	github.com/golang-migrate/migrate/v4 v4.18.2
 	github.com/gorilla/sessions v1.4.0
 	github.com/jackc/pgx/v5 v5.7.2
 	github.com/labstack/echo-contrib v0.17.2
@@ -52,7 +52,7 @@ require (
 	go.opentelemetry.io/otel/trace v1.32.0 // indirect
 	go.uber.org/atomic v1.11.0 // indirect
 	go.uber.org/multierr v1.11.0 // indirect
-	golang.org/x/exp v0.0.0-20250106191152-7588d65b2ba8 // indirect
+	golang.org/x/exp v0.0.0-20250128182459-e0ece0dbea4c // indirect
 	golang.org/x/net v0.34.0 // indirect
 	golang.org/x/sync v0.10.0 // indirect
 	golang.org/x/sys v0.29.0 // indirect
