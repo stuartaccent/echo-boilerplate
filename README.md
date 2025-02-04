@@ -105,6 +105,20 @@ build and watch:
 task gen:tailwind
 ```
 
+## JS
+
+Source JS files are located in `pkg/ui/js` and are compiled to `pkg/static/public/js`.
+
+install deps first:
+```bash
+npm install
+```
+
+build:
+```bash
+task gen:esbuild
+```
+
 ## Docker
 This can be used to build the app as a binary and run it in a container.
 

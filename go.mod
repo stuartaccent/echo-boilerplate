@@ -3,7 +3,7 @@ module echo.go.dev
 go 1.23
 
 require (
-	github.com/a-h/templ v0.3.819
+	github.com/a-h/templ v0.3.833
 	github.com/accentdesign/gtml v0.0.6
 	github.com/go-playground/validator/v10 v10.24.0
 	github.com/golang-migrate/migrate/v4 v4.18.2

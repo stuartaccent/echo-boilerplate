@@ -1,7 +1,6 @@
 package components
 
 import (
-	"github.com/a-h/templ"
 	. "github.com/accentdesign/gtml"
 )
 
@@ -17,28 +16,31 @@ func MenuSeparator() *Element {
 	return Div(Attrs{"class": "owl-dropdown-menu-separator", "role": "presentation"})
 }
 
-func UserMenu(opened bool) *Element {
-	url := "/auth/user-menu"
-	if !opened {
-		url += "?open"
-	}
-
-	return Div(
-		Attrs{"class": "owl-dropdown-menu", "hx-target": "this", "hx-swap": "outerHTML"},
-		Button(
-			Attrs{
-				"class":      "owl-button owl-button-ghost",
-				"hx-get":     url,
-				"hx-trigger": templ.KV("click from:body, load delay:5s", opened),
-			},
+func UserMenu() *Element {
+	return Div(Attrs{
+		"class":  "owl-dropdown-menu",
+		"x-data": "menu",
+	},
+		Button(Attrs{
+			"class":  "owl-button owl-button-ghost",
+			"x-ref":  "button",
+			"@click": "toggle",
+		},
 			Span(NA, Text("My Account")),
 			Icon("chevron-down", ""),
 		),
-		If(opened, Div(
-			Attrs{"class": "owl-dropdown-menu-content owl-open right-0", "role": "menu"},
+		Div(Attrs{
+			"class":               "owl-dropdown-menu-content",
+			"role":                "menu",
+			"x-anchor.bottom-end": "$refs.button",
+			"x-show":              "open",
+			"x-transition":        true,
+			"x-cloak":             true,
+			"@click.outside":      "close",
+		},
 			MenuLabel("My Account"),
 			MenuSeparator(),
 			MenuItem("Logout", "/auth/logout"),
-		)),
+		),
 	)
 }

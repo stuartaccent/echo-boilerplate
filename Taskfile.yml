@@ -5,6 +5,8 @@ vars:
   MIGRATIONS: pkg/storage/db/migrations
   CSS_IN: pkg/ui/css/global.css
   CSS_OUT: pkg/static/public/css/global.css
+  JS_IN: pkg/ui/js
+  JS_OUT: pkg/static/public/js
 
 tasks:
   setup:config:
@@ -38,6 +40,14 @@ tasks:
     desc: "Process CSS files with Tailwind CSS in watch mode with minification."
     cmds:
       - ./tmp/tailwindcss -i {{.CSS_IN}} -o {{.CSS_OUT}} --watch --minify
+
+  gen:esbuild:
+    desc: "Build the ui JavaScript files with esbuild."
+    cmds:
+      - npx esbuild {{.JS_IN}}/alpine.js --bundle --outfile={{.JS_OUT}}/alpine.js --minify --watch &
+      - npx esbuild {{.JS_IN}}/htmx.js --bundle --outfile={{.JS_OUT}}/htmx.js --minify --watch &
+      - npx esbuild {{.JS_IN}}/icon.js --bundle --outfile={{.JS_OUT}}/icon.js --minify --watch &
+      - wait
 
   migrate:add:
     desc: "Create a new database migration file."

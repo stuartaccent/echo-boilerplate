@@ -1,0 +1,8 @@
+{
+  "private": true,
+  "dependencies": {
+    "@alpinejs/anchor": "^3.14.8",
+    "alpinejs": "^3.14.8",
+    "htmx.org": "^1.9.12"
+  }
+}

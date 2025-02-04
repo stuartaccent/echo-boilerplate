@@ -2,7 +2,6 @@ package auth
 
 import (
 	"echo.go.dev/pkg/transport/middleware"
-	"echo.go.dev/pkg/ui/components"
 	"echo.go.dev/pkg/ui/pages"
 	"encoding/gob"
 	"github.com/labstack/echo/v4"
@@ -22,13 +21,11 @@ type LoginCredentials struct {
 
 // Router create a new Router.
 func Router(e *echo.Echo) {
-	auth := middleware.Authenticated()
 	g := e.Group("/auth")
 	{
 		g.GET("/login", loginForm)
 		g.POST("/login", login, middleware.AllowContentTypeForm)
 		g.GET("/logout", logout)
-		g.GET("/user-menu", userMenu, auth)
 	}
 }
 
@@ -93,11 +90,4 @@ func logout(c echo.Context) error {
 		return err
 	}
 	return c.Redirect(http.StatusFound, "/auth/login")
-}
-
-// userMenu the user menu in the header.
-func userMenu(c echo.Context) error {
-	cc := c.(*middleware.CustomContext)
-	_, open := c.QueryParams()["open"]
-	return cc.RenderComponent(http.StatusOK, components.UserMenu(open))
 }
