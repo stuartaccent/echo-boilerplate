@@ -6,8 +6,5 @@ import (
 )
 
 func Icon(icon, class string) *Element {
-	return &Element{
-		Tag:   "owl-icon",
-		Attrs: Attrs{"icon": icon, "class": templ.KV(class, class != "")},
-	}
+	return New("owl-icon", Attrs{"icon": icon, "class": templ.KV(class, class != "")})
 }
