@@ -17,24 +17,25 @@ tasks:
   setup:tooling:
     desc: "Install necessary Go tools and dependencies."
     cmds:
-      - go install -tags 'postgres' github.com/golang-migrate/migrate/v4/cmd/migrate@latest
-      - go install github.com/sqlc-dev/sqlc/cmd/sqlc@latest
-      - go install github.com/a-h/templ/cmd/templ@latest
-      - go install github.com/air-verse/air@latest
-      - go install honnef.co/go/tools/cmd/staticcheck@latest
-      - go install github.com/golangci/golangci-lint/cmd/golangci-lint@latest
-      - go install golang.org/x/vuln/cmd/govulncheck@latest
-      - go install github.com/securego/gosec/v2/cmd/gosec@latest
+      - go mod download
+      - go mod tidy
+
+  air:
+    desc: "Run the Air live reload server."
+    deps:
+      - task: setup:tooling
+    cmds:
+      - go tool air
 
   gen:sqlc:
     desc: "Generate Go code from SQL queries using sqlc."
     cmds:
-      - sqlc generate
+      - go tool sqlc generate
 
   gen:templ:
     desc: "Generate code from templates using templ."
     cmds:
-      - templ generate
+      - go tool templ generate
 
   gen:tailwind:
     desc: "Process CSS files with Tailwind CSS in watch mode with minification."
@@ -43,18 +44,28 @@ tasks:
 
   gen:esbuild:
     desc: "Build the ui JavaScript files with esbuild."
+    deps:
+      - task: gen:esbuild:file
+        vars: { IN: '{{.JS_IN}}/alpine.js', OUT: '{{.JS_OUT}}/alpine.js' }
+      - task: gen:esbuild:file
+        vars: { IN: '{{.JS_IN}}/htmx.js', OUT: '{{.JS_OUT}}/htmx.js' }
+      - task: gen:esbuild:file
+        vars: { IN: '{{.JS_IN}}/icon.js', OUT: '{{.JS_OUT}}/icon.js' }
+
+  gen:esbuild:file:
+    desc: "Build a single file with esbuild."
+    vars:
+      IN: '{{default "" .IN}}'
+      OUT: '{{default "" .OUT}}'
     cmds:
-      - npx esbuild {{.JS_IN}}/alpine.js --bundle --outfile={{.JS_OUT}}/alpine.js --minify --watch &
-      - npx esbuild {{.JS_IN}}/htmx.js --bundle --outfile={{.JS_OUT}}/htmx.js --minify --watch &
-      - npx esbuild {{.JS_IN}}/icon.js --bundle --outfile={{.JS_OUT}}/icon.js --minify --watch &
-      - wait
+      - npx esbuild {{.IN}} --bundle --outfile={{.OUT}} --minify --watch
 
   migrate:add:
     desc: "Create a new database migration file."
     vars:
       SEQ: '{{default "initial" .SEQ}}'
     cmds:
-      - migrate create -ext sql -dir {{.MIGRATIONS}} -seq "{{.SEQ}}"
+      - go tool migrate create -ext sql -dir {{.MIGRATIONS}} -seq "{{.SEQ}}"
 
   migrate:up:
     desc: "Apply all migrations to the database."
@@ -69,7 +80,7 @@ tasks:
   dev:fmt:
     desc: "Format Go code according to the standard Go style."
     cmds:
-      - templ fmt .
+      - go tool templ fmt .
       - gofmt -l -w .
 
   dev:vet:
@@ -80,22 +91,22 @@ tasks:
   dev:static:
     desc: "Perform advanced static analysis using staticcheck."
     cmds:
-      - staticcheck ./...
+      - go tool staticcheck ./...
 
   dev:lintci:
     desc: "Run golangci-lint to execute multiple linters."
     cmds:
-      - golangci-lint run ./...
+      - go tool golangci-lint run ./...
 
   dev:vuln:
     desc: "Scan for known vulnerabilities in dependencies using govulncheck."
     cmds:
-      - govulncheck ./...
+      - go tool govulncheck ./...
 
   dev:sec:
     desc: "Check for common security issues with gosec."
     cmds:
-      - gosec ./...
+      - go tool gosec ./...
 
   dev:lint:
     desc: "Run all linting and security analysis tools."

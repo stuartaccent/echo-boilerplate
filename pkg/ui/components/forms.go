@@ -1,12 +1,10 @@
 package components
 
-import (
-	. "github.com/accentdesign/gtml"
-)
+import "github.com/accentdesign/gtml"
 
-func LoginForm(csrfToken, err string) *Element {
-	return Form(
-		Attrs{
+func LoginForm(csrfToken, err string) *gtml.Element {
+	return gtml.Form(
+		gtml.Attrs{
 			"class":     "w-full max-w-[350px] grid gap-10",
 			"id":        "login-form",
 			"method":    "post",
@@ -14,10 +12,10 @@ func LoginForm(csrfToken, err string) *Element {
 			"hx-select": "#login-form",
 			"hx-swap":   "outerHTML",
 		},
-		Div(
-			NA,
-			H1(Attrs{"class": "owl-h2"}, Text("Login")),
-			P(Attrs{"class": "text-muted-foreground"}, Text("Access your account.")),
+		gtml.Div(
+			gtml.NA,
+			gtml.H1(gtml.Attrs{"class": "owl-h2"}, gtml.Text("Login")),
+			gtml.P(gtml.Attrs{"class": "text-muted-foreground"}, gtml.Text("Access your account.")),
 		),
 		Csrf(csrfToken),
 		FormInput("email", "Email", "email", "", "", "", true),

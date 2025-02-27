@@ -5,7 +5,7 @@ tmp_dir = "tmp"
 [build]
   args_bin = ["server", "--config", "config.dev.toml"]
   bin = "./tmp/main"
-  cmd = "templ generate && go build -o ./tmp/main ."
+  cmd = "go tool templ generate && go build -o ./tmp/main ."
   delay = 1000
   exclude_dir = ["db", "tmp"]
   exclude_file = []

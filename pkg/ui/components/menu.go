@@ -1,35 +1,33 @@
 package components
 
-import (
-	. "github.com/accentdesign/gtml"
-)
+import "github.com/accentdesign/gtml"
 
-func MenuItem(label, url string) *Element {
-	return A(Attrs{"class": "owl-dropdown-menu-item", "href": url, "role": "menuitem"}, Text(label))
+func MenuItem(label, url string) *gtml.Element {
+	return gtml.A(gtml.Attrs{"class": "owl-dropdown-menu-item", "href": url, "role": "menuitem"}, gtml.Text(label))
 }
 
-func MenuLabel(label string) *Element {
-	return Div(Attrs{"class": "owl-dropdown-menu-label"}, Text(label))
+func MenuLabel(label string) *gtml.Element {
+	return gtml.Div(gtml.Attrs{"class": "owl-dropdown-menu-label"}, gtml.Text(label))
 }
 
-func MenuSeparator() *Element {
-	return Div(Attrs{"class": "owl-dropdown-menu-separator", "role": "presentation"})
+func MenuSeparator() *gtml.Element {
+	return gtml.Div(gtml.Attrs{"class": "owl-dropdown-menu-separator", "role": "presentation"})
 }
 
-func UserMenu() *Element {
-	return Div(Attrs{
+func UserMenu() *gtml.Element {
+	return gtml.Div(gtml.Attrs{
 		"class":  "owl-dropdown-menu",
 		"x-data": "menu",
 	},
-		Button(Attrs{
+		gtml.Button(gtml.Attrs{
 			"class":  "owl-button owl-button-ghost",
 			"x-ref":  "button",
 			"@click": "toggle",
 		},
-			Span(NA, Text("My Account")),
+			gtml.Span(gtml.NA, gtml.Text("My Account")),
 			Icon("chevron-down", ""),
 		),
-		Div(Attrs{
+		gtml.Div(gtml.Attrs{
 			"class":               "owl-dropdown-menu-content",
 			"role":                "menu",
 			"x-anchor.bottom-end": "$refs.button",

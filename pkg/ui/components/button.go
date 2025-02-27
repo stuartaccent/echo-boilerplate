@@ -1,9 +1,7 @@
 package components
 
-import (
-	. "github.com/accentdesign/gtml"
-)
+import "github.com/accentdesign/gtml"
 
-func Submit(text string) *Element {
-	return Button(Attrs{"class": "owl-button", "type": "submit"}, Text(text))
+func Submit(text string) *gtml.Element {
+	return gtml.Button(gtml.Attrs{"class": "owl-button", "type": "submit"}, gtml.Text(text))
 }

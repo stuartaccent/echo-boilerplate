@@ -2,18 +2,18 @@ package components
 
 import (
 	"github.com/a-h/templ"
-	. "github.com/accentdesign/gtml"
+	"github.com/accentdesign/gtml"
 )
 
-func Csrf(value string) *Element {
-	return Input(Attrs{"type": "hidden", "name": "_csrf", "value": value})
+func Csrf(value string) *gtml.Element {
+	return gtml.Input(gtml.Attrs{"type": "hidden", "name": "_csrf", "value": value})
 }
 
-func FormInput(name, label, inputType, placeholder, helpText, errorText string, required bool) *Element {
-	return Div(
-		Attrs{"class": "owl-form-field"},
-		Label(Attrs{"class": "owl-label", "for": name}, Text(label)),
-		Input(Attrs{
+func FormInput(name, label, inputType, placeholder, helpText, errorText string, required bool) *gtml.Element {
+	return gtml.Div(
+		gtml.Attrs{"class": "owl-form-field"},
+		gtml.Label(gtml.Attrs{"class": "owl-label", "for": name}, gtml.Text(label)),
+		gtml.Input(gtml.Attrs{
 			"class":       "owl-input",
 			"id":          name,
 			"name":        name,
@@ -21,7 +21,7 @@ func FormInput(name, label, inputType, placeholder, helpText, errorText string, 
 			"required":    required,
 			"type":        inputType,
 		}),
-		If(errorText != "", P(Attrs{"class": "owl-form-field-error"}, Text(errorText))),
-		If(helpText != "" && errorText == "", P(Attrs{"class": "owl-form-field-description"}, Text(helpText))),
+		gtml.If(errorText != "", gtml.P(gtml.Attrs{"class": "owl-form-field-error"}, gtml.Text(errorText))),
+		gtml.If(helpText != "" && errorText == "", gtml.P(gtml.Attrs{"class": "owl-form-field-description"}, gtml.Text(helpText))),
 	)
 }
