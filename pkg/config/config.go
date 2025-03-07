@@ -9,6 +9,7 @@ import (
 	"net/http"
 	"net/url"
 	"strings"
+	"sync"
 )
 
 type (
@@ -23,34 +24,43 @@ const (
 	SslModeRequire SslMode = "require"
 )
 
+var (
+	config *Config
+	Path   string
+	once   sync.Once
+)
+
+// GetConfig returns the configuration.
+func GetConfig() *Config {
+	once.Do(func() {
+		if Path == "" {
+			Path = "config.toml"
+		}
+		config = &Config{}
+
+		viper.SetConfigFile(Path)
+		viper.SetEnvKeyReplacer(strings.NewReplacer(".", "_"))
+		viper.AutomaticEnv()
+
+		if err := viper.ReadInConfig(); err != nil {
+			log.Fatalf("Error reading config file: %v", err)
+		}
+		if err := viper.Unmarshal(&config); err != nil {
+			log.Fatalf("Error unmarshaling config: %v", err)
+		}
+
+		log.Println("Loaded config file:", viper.ConfigFileUsed())
+	})
+
+	return config
+}
+
 // Config represents the top-level configuration structure.
 type Config struct {
 	Server   ServerConfig   `mapstructure:"server"`
 	Database DatabaseConfig `mapstructure:"database"`
 	Security SecurityConfig `mapstructure:"security"`
 	Session  SessionConfig  `mapstructure:"session"`
-}
-
-// FromPath creates and validates a new Config from a .toml file.
-// If environment variables are set, they will override the values from the .toml file.
-// The environment variables must be prefixed with the
-// name of the configuration structure in uppercase, and the keys must be separated
-// by underscores. For example, to override the `port` value in the `server` structure,
-// the environment variable must be `SERVER_PORT`.
-func FromPath(path string) (*Config, error) {
-	config := &Config{}
-
-	viper.SetConfigFile(path)
-	viper.SetEnvKeyReplacer(strings.NewReplacer(".", "_"))
-	viper.AutomaticEnv()
-
-	if err := viper.ReadInConfig(); err != nil {
-		return nil, err
-	}
-	if err := viper.Unmarshal(&config); err != nil {
-		return nil, err
-	}
-	return config, nil
 }
 
 // ServerConfig represents the server configuration.

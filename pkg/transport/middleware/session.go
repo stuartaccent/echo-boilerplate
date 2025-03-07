@@ -8,16 +8,17 @@ import (
 )
 
 // Session returns an Echo middleware function for the session.
-func Session(cfg config.SessionConfig) echo.MiddlewareFunc {
-	sessionStore := sessions.NewCookieStore(cfg.KeyBytes(), cfg.EncKeyBytes())
+func Session() echo.MiddlewareFunc {
+	cfg := config.GetConfig()
+	sessionStore := sessions.NewCookieStore(cfg.Session.KeyBytes(), cfg.Session.EncKeyBytes())
 
 	sessionStore.Options = &sessions.Options{
-		Path:     cfg.Path,
-		Domain:   cfg.Domain,
-		MaxAge:   cfg.MaxAge,
-		Secure:   cfg.Secure,
-		HttpOnly: cfg.HttpOnly,
-		SameSite: cfg.SameSite,
+		Path:     cfg.Session.Path,
+		Domain:   cfg.Session.Domain,
+		MaxAge:   cfg.Session.MaxAge,
+		Secure:   cfg.Session.Secure,
+		HttpOnly: cfg.Session.HttpOnly,
+		SameSite: cfg.Session.SameSite,
 	}
 
 	return session.Middleware(sessionStore)

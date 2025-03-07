@@ -3,14 +3,15 @@ package cmd
 import (
 	"context"
 	"echo.go.dev/pkg/auth"
+	"echo.go.dev/pkg/config"
 	"echo.go.dev/pkg/home"
 	"echo.go.dev/pkg/static"
+	"echo.go.dev/pkg/storage/db"
 	_http "echo.go.dev/pkg/transport/http"
 	"echo.go.dev/pkg/transport/middleware"
 	"echo.go.dev/pkg/transport/validate"
 	"errors"
 	"fmt"
-	"github.com/jackc/pgx/v5/pgxpool"
 	"github.com/labstack/echo/v4"
 	echomiddleware "github.com/labstack/echo/v4/middleware"
 	"github.com/spf13/cobra"
@@ -27,22 +28,13 @@ var cmdServer = &cobra.Command{
 	},
 }
 
-func initPool() *pgxpool.Pool {
-	ctx := context.Background()
-	dbPool, err := pgxpool.New(ctx, cfg.Database.URL().String())
-	if err != nil {
-		log.Fatalf("Unable to create connection pool: %v\n", err)
-	}
-
-	if err := dbPool.Ping(ctx); err != nil {
-		log.Fatalf("Unable to ping database: %v\n", err)
-	}
-
-	return dbPool
-}
-
 func runServer() {
-	dbPool := initPool()
+	cfg := config.GetConfig()
+	ctx := context.Background()
+	dbPool, err := db.GetPool(ctx)
+	if err != nil {
+		log.Fatalf("Error connecting to the database: %v", err)
+	}
 	defer dbPool.Close()
 
 	engine := echo.New()
@@ -53,12 +45,12 @@ func runServer() {
 	engine.Use(
 		echomiddleware.Recover(),
 		middleware.Logger(),
-		middleware.Secure(cfg.Security),
-		middleware.CSRF(cfg.Session),
-		middleware.CORS(cfg.Security),
+		middleware.Secure(),
+		middleware.CSRF(),
+		middleware.CORS(),
 		middleware.RateLimit(),
 		middleware.Gzip(),
-		middleware.Session(cfg.Session),
+		middleware.Session(),
 		middleware.Context(dbPool),
 	)
 

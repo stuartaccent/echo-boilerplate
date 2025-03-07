@@ -7,9 +7,10 @@ import (
 )
 
 // CORS returns an Echo middleware function for cors.
-func CORS(cfg config.SecurityConfig) echo.MiddlewareFunc {
+func CORS() echo.MiddlewareFunc {
+	cfg := config.GetConfig()
 	corsConfig := middleware.CORSConfig{
-		AllowOrigins: cfg.AllowedHosts,
+		AllowOrigins: cfg.Security.AllowedHosts,
 		AllowHeaders: []string{
 			echo.HeaderOrigin,
 			echo.HeaderContentType,

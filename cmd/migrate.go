@@ -2,6 +2,7 @@ package cmd
 
 import (
 	"database/sql"
+	"echo.go.dev/pkg/config"
 	"echo.go.dev/pkg/storage/db"
 	"errors"
 	"fmt"
@@ -65,9 +66,7 @@ var cmdMigrateStep = &cobra.Command{
 }
 
 func migrateDatabase(migrateFunc func(*migrate.Migrate) error) error {
-	if cfg == nil {
-		return errors.New("config not initialized")
-	}
+	cfg := config.GetConfig()
 
 	conn, err := sql.Open("postgres", cfg.Database.URL().String())
 	if err != nil {

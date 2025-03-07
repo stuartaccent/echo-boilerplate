@@ -3,9 +3,9 @@ package cmd
 import (
 	"context"
 	"echo.go.dev/pkg/auth"
+	"echo.go.dev/pkg/storage/db"
 	"echo.go.dev/pkg/storage/db/dbx"
 	"fmt"
-	"github.com/jackc/pgx/v5"
 	"github.com/spf13/cobra"
 	"os"
 )
@@ -20,7 +20,7 @@ var cmdSetPassword = &cobra.Command{
 	Run: func(cmd *cobra.Command, args []string) {
 		ctx := context.Background()
 
-		conn, err := pgx.Connect(ctx, cfg.Database.URL().String())
+		conn, err := db.GetConn(ctx)
 		if err != nil {
 			fmt.Printf("Error connecting to the database: %v\n", err)
 			os.Exit(1)
