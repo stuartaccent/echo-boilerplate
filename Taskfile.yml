@@ -58,7 +58,7 @@ tasks:
       IN: '{{default "" .IN}}'
       OUT: '{{default "" .OUT}}'
     cmds:
-      - npx esbuild {{.IN}} --bundle --outfile={{.OUT}} --minify --watch
+      - go tool esbuild {{.IN}} --bundle --outfile={{.OUT}} --minify --watch
 
   migrate:add:
     desc: "Create a new database migration file."
