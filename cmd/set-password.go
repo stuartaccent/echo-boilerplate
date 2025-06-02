@@ -2,7 +2,7 @@ package cmd
 
 import (
 	"context"
-	"echo.go.dev/pkg/auth"
+	"echo.go.dev/pkg/domain/auth"
 	"echo.go.dev/pkg/storage/db"
 	"echo.go.dev/pkg/storage/db/dbx"
 	"fmt"

@@ -1,25 +1,42 @@
 package pages
 
-import (
-	"echo.go.dev/pkg/ui/components"
-	"echo.go.dev/pkg/ui/layouts"
-)
+import "echo.go.dev/pkg/ui/layouts"
 
-type LoginData struct {
+type LoginProps struct {
+	Csrf  string
 	Error string
-	CsrfToken  string
 }
 
-var loginLayout = layouts.Layout{
-	Title:      "Login",
-	ShowHeader: false,
-	BodyClass:  "",
-}
-
-templ Login(d LoginData) {
-	@layouts.Base(loginLayout) {
+templ Login(props LoginProps) {
+	@layouts.Base(layouts.Layout{
+		Title:      "Login",
+		ShowHeader: false,
+		BodyClass:  "",
+	}) {
 		<div class="min-h-screen flex flex-col items-center justify-center p-5">
-			@components.LoginForm(d.CsrfToken, d.Error)
+			<form id="login_form" class="owl-card max-w-[400px] w-full" hx-post="/auth/login" hx-swap-oob="true">
+				<div class="owl-card-header">
+					<div class="owl-card-title">Login</div>
+					<div class="owl-card-description">Login to access your account.</div>
+				</div>
+				<div class="owl-card-content">
+					<input name="_csrf" type="hidden" value={ props.Csrf } hidden/>
+					<div class="owl-form-field">
+						<label class="owl-label" for="email">Email</label>
+						<input class="owl-input" type="email" name="email" id="email" placeholder="Email" required/>
+					</div>
+					<div class="owl-form-field">
+						<label class="owl-label" for="password">Password</label>
+						<input class="owl-input" type="password" name="password" id="password" placeholder="Password" required/>
+					</div>
+				</div>
+				<div class="owl-card-footer grid grid-cols-1 gap-4">
+					<button class="owl-button w-full" type="submit">Login</button>
+					if props.Error != "" {
+						<div class="owl-form-field-error">{ props.Error }</div>
+					}
+				</div>
+			</form>
 		</div>
 	}
 }

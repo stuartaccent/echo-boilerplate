@@ -1,6 +1,6 @@
 package layouts
 
-import "echo.go.dev/pkg/ui/components"
+import "echo.go.dev/pkg/ui/user"
 
 type Layout struct {
 	Title      string
@@ -24,7 +24,12 @@ templ Base(l Layout) {
 		</head>
 		<body class={ l.BodyClass }>
 			if l.ShowHeader {
-				@components.PageHeader()
+				<header>
+					<div class="flex p-5 justify-between items-center">
+						<a class="owl-h3 mr-auto" href="/">Echo Boilerplate</a>
+						@user.Menu()
+					</div>
+				</header>
 			}
 			{ children... }
 		</body>

@@ -15,8 +15,8 @@ func Authenticated() echo.MiddlewareFunc {
 
 			if c.Get("user") == nil {
 				cc := c.(*CustomContext)
-				if cc.HTMX.IsHTMXRequest() {
-					cc.HTMX.SetRedirect("/auth/login")
+				if cc.IsHTMXRequest() {
+					cc.HTMXRedirect("/auth/login")
 					return c.NoContent(http.StatusNoContent)
 				} else {
 					return c.Redirect(http.StatusFound, "/auth/login")

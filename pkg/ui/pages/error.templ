@@ -5,16 +5,22 @@ import (
 	"fmt"
 )
 
-templ Error(code int, title, message string) {
+type ErrorProps struct {
+	Title   string
+	Code    int
+	Message string
+}
+
+templ Error(props ErrorProps) {
 	@layouts.Base(layouts.Layout{
-		Title:      title,
+		Title:      props.Title,
 		ShowHeader: false,
 		BodyClass:  "",
 	}) {
 		<div class="min-h-screen flex flex-col items-center justify-center p-5">
 			<div class="w-full max-w-[500px]">
-				<h1 class="owl-h1">{ fmt.Sprintf("%d", code) } <span class="text-base font-normal">{ title }</span></h1>
-				<p class="owl-p">{ message }</p>
+				<h1 class="owl-h1">{ fmt.Sprintf("%d", props.Code) } <span class="text-base font-normal">{ props.Title }</span></h1>
+				<p class="owl-p">{ props.Message }</p>
 				<p class="owl-p"><a class="owl-anchor" href="/">Back to Home</a></p>
 			</div>
 		</div>

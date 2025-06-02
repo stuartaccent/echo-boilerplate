@@ -1,18 +1,58 @@
 @import "tailwindcss";
 
+/* light theme variables */
+
+@layer base {
+    :root {
+        --background: 0 0% 100%;
+        --foreground: 240 10% 3.9%;
+        --primary: 240 5.9% 10%;
+        --primary-foreground: 0 0% 98%;
+        --secondary: 240 4.8% 95.9%;
+        --secondary-foreground: 240 5.9% 10%;
+        --muted: 240 4.8% 95.9%;
+        --muted-foreground: 240 3.8% 46.1%;
+        --destructive: 0 72.22% 50.59%;
+        --destructive-foreground: 0 0% 98%;
+        --border: 240 5.9% 90%;
+        --input: 240 5.9% 90%;
+    }
+}
+
+/* dark theme variables */
+
+@layer base {
+    .dark {
+        --background: 240 10% 3.9%;
+        --foreground: 0 0% 98%;
+        --primary: 0 0% 98%;
+        --primary-foreground: 240 5.9% 10%;
+        --secondary: 240 3.7% 15.9%;
+        --secondary-foreground: 0 0% 98%;
+        --muted: 240 3.7% 15.9%;
+        --muted-foreground: 240 5% 64.9%;
+        --destructive: 0 62.8% 30.6%;
+        --destructive-foreground: 0 85.7% 97.3%;
+        --border: 240 3.7% 15.9%;
+        --input: 240 3.7% 15.9%;
+    }
+}
+
+/* theme */
+
 @theme {
-    --color-background: hsl(0 0% 100%);
-    --color-foreground: hsl(240 10% 3.9%);
-    --color-primary: hsl(240 5.9% 10%);
-    --color-primary-foreground: hsl(0 0% 98%);
-    --color-secondary: hsl(240 4.8% 95.9%);
-    --color-secondary-foreground: hsl(240 5.9% 10%);
-    --color-muted: hsl(240 4.8% 95.9%);
-    --color-muted-foreground: hsl(240 3.8% 46.1%);
-    --color-destructive: hsl(0 72.22% 50.59%);
-    --color-destructive-foreground: hsl(0 0% 98%);
-    --color-border: hsl(240 5.9% 90%);
-    --color-input: hsl(240 5.9% 90%);
+    --color-background: hsl(var(--background));
+    --color-foreground: hsl(var(--foreground));
+    --color-primary: hsl(var(--primary));
+    --color-primary-foreground: hsl(var(--primary-foreground));
+    --color-secondary: hsl(var(--secondary));
+    --color-secondary-foreground: hsl(var(--secondary-foreground));
+    --color-muted: hsl(var(--muted));
+    --color-muted-foreground: hsl(var(--muted-foreground));
+    --color-destructive: hsl(var(--destructive));
+    --color-destructive-foreground: hsl(var(--destructive-foreground));
+    --color-border: hsl(var(--border));
+    --color-input: hsl(var(--input));
 }
 
 /* base */
@@ -54,6 +94,29 @@
     }
     [icon] {
         @apply inline-flex;
+    }
+}
+
+/* cards */
+
+@layer components {
+    .owl-card {
+        @apply w-full rounded-lg border border-border bg-background shadow-sm;
+    }
+    .owl-card-header {
+        @apply flex flex-col space-y-1.5 p-6;
+    }
+    .owl-card-title {
+        @apply text-2xl font-semibold leading-none tracking-tight;
+    }
+    .owl-card-description {
+        @apply text-sm text-muted-foreground;
+    }
+    .owl-card-content {
+        @apply grid gap-4 p-6 pt-0;
+    }
+    .owl-card-footer {
+        @apply flex items-center p-6 pt-0;
     }
 }
 
@@ -130,7 +193,7 @@
         @apply relative inline-flex;
     }
     .owl-dropdown-menu-content {
-        @apply z-50 min-w-[8rem] overflow-hidden rounded-md border border-border bg-background p-1 shadow-md w-56;
+        @apply z-50 min-w-[8rem] overflow-hidden rounded-md border border-border bg-background p-1 shadow-md w-56 absolute top-11;
     }
     .owl-dropdown-menu-label {
         @apply px-2 py-1.5 text-sm font-semibold;

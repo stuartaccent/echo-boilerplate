@@ -1,4 +1,4 @@
-package http
+package errors
 
 import (
 	"echo.go.dev/pkg/transport/middleware"
@@ -8,7 +8,7 @@ import (
 	"net/http"
 )
 
-func ErrorHandler(err error, c echo.Context) {
+func HttpErrorHandler(err error, c echo.Context) {
 	if c.Response().Committed {
 		return
 	}
@@ -28,7 +28,11 @@ func ErrorHandler(err error, c echo.Context) {
 	}
 
 	cc := middleware.CustomContext{Context: c}
-	if err := cc.RenderComponent(code, pages.Error(code, http.StatusText(code), message)); err != nil {
+	if err := cc.RenderComponent(code, pages.Error(pages.ErrorProps{
+		Code:    code,
+		Title:   http.StatusText(code),
+		Message: message,
+	})); err != nil {
 		c.Logger().Error(err)
 	}
 }

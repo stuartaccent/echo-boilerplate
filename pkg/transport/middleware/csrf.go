@@ -10,7 +10,8 @@ import (
 func CSRF() echo.MiddlewareFunc {
 	cfg := config.GetConfig()
 	csrfPaths := map[string]struct{}{
-		"/auth/login": {},
+		"/auth/login":    {},
+		"/ui/user/login": {},
 	}
 
 	csrfConfig := middleware.CSRFConfig{

@@ -1,6 +1,7 @@
 package middleware
 
 import (
+	"context"
 	"echo.go.dev/pkg/storage/db/dbx"
 	"github.com/a-h/templ"
 	"github.com/gorilla/sessions"
@@ -11,7 +12,6 @@ import (
 
 type CustomContext struct {
 	echo.Context
-	HTMX     *HTMX
 	Postgres *pgxpool.Pool
 	Queries  *dbx.Queries
 	Session  *sessions.Session
@@ -21,11 +21,48 @@ func (c *CustomContext) RenderComponent(statusCode int, t templ.Component) error
 	buf := templ.GetBuffer()
 	defer templ.ReleaseBuffer(buf)
 
-	if err := t.Render(c.Request().Context(), buf); err != nil {
+	ctx := context.WithValue(c.Request().Context(), "Reverse", c.Reverse)
+	if err := t.Render(ctx, buf); err != nil {
 		return err
 	}
 
 	return c.HTML(statusCode, buf.String())
+}
+
+func (c *CustomContext) Reverse(url string, params ...interface{}) string {
+	return c.Echo().Reverse(url, params...)
+}
+
+func (c *CustomContext) IsHTMXRequest() bool {
+	return c.Request().Header.Get("HX-Request") == "true"
+}
+
+func (c *CustomContext) IsHTMXBoosted() bool {
+	return c.Request().Header.Get("HX-Boosted") == "true"
+}
+
+func (c *CustomContext) HTMXRedirect(url string) {
+	c.Response().Header().Set("HX-Redirect", url)
+}
+
+func (c *CustomContext) HTMXPushUrl(url string) {
+	c.Response().Header().Set("HX-Push-Url", url)
+}
+
+func (c *CustomContext) HTMXRefresh() {
+	c.Response().Header().Set("HX-Refresh", "true")
+}
+
+func (c *CustomContext) HTMXTrigger(content string) {
+	c.Response().Header().Set("HX-Trigger", content)
+}
+
+func (c *CustomContext) HTMXTriggerAfterSettle(content string) {
+	c.Response().Header().Set("HX-Trigger-After-Settle", content)
+}
+
+func (c *CustomContext) HTMXTriggerAfterSwap(content string) {
+	c.Response().Header().Set("HX-Trigger-After-Swap", content)
 }
 
 // Context middleware func to define a custom context.
@@ -34,7 +71,6 @@ func Context(postgres *pgxpool.Pool) echo.MiddlewareFunc {
 
 	return func(next echo.HandlerFunc) echo.HandlerFunc {
 		return func(c echo.Context) error {
-			htmx := &HTMX{Request: c.Request(), Response: c.Response()}
 			sess, err := session.Get("session", c)
 			// if there is a problem with the session try to reset it
 			if err != nil {
@@ -45,7 +81,6 @@ func Context(postgres *pgxpool.Pool) echo.MiddlewareFunc {
 			}
 			cc := &CustomContext{
 				Context:  c,
-				HTMX:     htmx,
 				Postgres: postgres,
 				Queries:  queries,
 				Session:  sess,

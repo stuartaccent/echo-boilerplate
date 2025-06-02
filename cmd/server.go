@@ -2,12 +2,11 @@ package cmd
 
 import (
 	"context"
-	"echo.go.dev/pkg/auth"
 	"echo.go.dev/pkg/config"
-	"echo.go.dev/pkg/home"
+	"echo.go.dev/pkg/domain"
+	apperrors "echo.go.dev/pkg/errors"
 	"echo.go.dev/pkg/static"
 	"echo.go.dev/pkg/storage/db"
-	_http "echo.go.dev/pkg/transport/http"
 	"echo.go.dev/pkg/transport/middleware"
 	"echo.go.dev/pkg/transport/validate"
 	"errors"
@@ -40,7 +39,7 @@ func runServer() {
 	engine := echo.New()
 	engine.Debug = cfg.Server.Debug
 	engine.Validator = validate.New()
-	engine.HTTPErrorHandler = _http.ErrorHandler
+	engine.HTTPErrorHandler = apperrors.HttpErrorHandler
 
 	engine.Use(
 		echomiddleware.Recover(),
@@ -55,8 +54,7 @@ func runServer() {
 	)
 
 	static.Router(engine)
-	home.Router(engine)
-	auth.Router(engine)
+	domain.Router(engine)
 
 	server := http.Server{
 		Addr:              fmt.Sprintf(":%d", cfg.Server.Port),
