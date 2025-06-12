@@ -193,10 +193,10 @@
         @apply relative inline-flex;
     }
     .owl-dropdown-menu-content {
-        @apply z-50 min-w-[8rem] overflow-hidden rounded-md border border-border bg-background p-1 shadow-md w-56 absolute top-11;
+        @apply z-50 min-w-[8rem] overflow-hidden rounded-md border border-border bg-background p-1 shadow-md w-56 absolute;
     }
     .owl-dropdown-menu-label {
-        @apply px-2 py-1.5 text-sm font-semibold;
+        @apply px-2 py-1.5 text-sm font-medium;
     }
     .owl-dropdown-menu-separator {
         @apply -mx-1 my-1 h-px bg-muted;
