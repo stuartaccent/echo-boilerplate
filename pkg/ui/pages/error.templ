@@ -13,9 +13,7 @@ type ErrorProps struct {
 
 templ Error(props ErrorProps) {
 	@layouts.Base(layouts.Layout{
-		Title:      props.Title,
-		ShowHeader: false,
-		BodyClass:  "",
+		Title: props.Title,
 	}) {
 		<div class="min-h-screen flex flex-col items-center justify-center p-5">
 			<div class="w-full max-w-[500px]">

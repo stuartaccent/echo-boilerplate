@@ -1,17 +1,8 @@
 package layouts
 
-import "echo.go.dev/pkg/ui/lib"
-
 type Layout struct {
-	Title      string
-	ShowHeader bool
-	BodyClass  string
-}
-
-var userMenu = []lib.DropdownMenuItem{
-	{Type: lib.DropdownMenuItemTypeLabel, Text: "My Account"},
-	{Type: lib.DropdownMenuItemTypeSeparator},
-	{Type: lib.DropdownMenuItemTypeItem, Text: "logout", Href: "/auth/logout"},
+	Title     string
+	BodyClass string
 }
 
 templ Base(l Layout) {
@@ -28,14 +19,6 @@ templ Base(l Layout) {
 			<script src="/static/js/ui.js" type="module" defer></script>
 		</head>
 		<body class={ l.BodyClass }>
-			if l.ShowHeader {
-				<header>
-					<div class="flex p-5 justify-between items-center">
-						<a class="owl-h3 mr-auto" href="/">Echo Boilerplate</a>
-						<ui-dropdown-menu class="owl-dropdown-menu" title="My Account" items={ templ.JSONString(userMenu) } position="right-0 top-[110%]"></ui-dropdown-menu>
-					</div>
-				</header>
-			}
 			{ children... }
 		</body>
 	</html>

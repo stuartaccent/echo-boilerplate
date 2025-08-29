@@ -9,9 +9,7 @@ type LoginProps struct {
 
 templ Login(props LoginProps) {
 	@layouts.Base(layouts.Layout{
-		Title:      "Login",
-		ShowHeader: false,
-		BodyClass:  "",
+		Title: "Login",
 	}) {
 		<div class="min-h-screen flex flex-col items-center justify-center p-5">
 			<form id="login_form" class="owl-card max-w-[400px] w-full" hx-post="/auth/login" hx-swap-oob="true">

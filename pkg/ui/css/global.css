@@ -1,58 +1,55 @@
-@import "tailwindcss";
+@import "tailwindcss" source(none);
+@source "../";
 
 /* light theme variables */
 
-@layer base {
-    :root {
-        --background: 0 0% 100%;
-        --foreground: 240 10% 3.9%;
-        --primary: 240 5.9% 10%;
-        --primary-foreground: 0 0% 98%;
-        --secondary: 240 4.8% 95.9%;
-        --secondary-foreground: 240 5.9% 10%;
-        --muted: 240 4.8% 95.9%;
-        --muted-foreground: 240 3.8% 46.1%;
-        --destructive: 0 72.22% 50.59%;
-        --destructive-foreground: 0 0% 98%;
-        --border: 240 5.9% 90%;
-        --input: 240 5.9% 90%;
-    }
+@theme {
+    --color-background: oklch(1 0 0);
+    --color-foreground: oklch(0.145 0 0);
+    --color-card: oklch(1 0 0);
+    --color-card-foreground: oklch(0.145 0 0);
+    --color-popover: oklch(1 0 0);
+    --color-popover-foreground: oklch(0.145 0 0);
+    --color-primary: oklch(0.205 0 0);
+    --color-primary-foreground: oklch(0.985 0 0);
+    --color-secondary: oklch(0.97 0 0);
+    --color-secondary-foreground: oklch(0.205 0 0);
+    --color-muted: oklch(0.97 0 0);
+    --color-muted-foreground: oklch(0.556 0 0);
+    --color-accent: oklch(0.97 0 0);
+    --color-accent-foreground: oklch(0.205 0 0);
+    --color-destructive: oklch(0.577 0.245 27.325);
+    --color-destructive-foreground: oklch(1 0 0);
+    --color-border: oklch(0.922 0 0);
+    --color-input: oklch(0.922 0 0);
 }
 
 /* dark theme variables */
 
 @layer base {
-    .dark {
-        --background: 240 10% 3.9%;
-        --foreground: 0 0% 98%;
-        --primary: 0 0% 98%;
-        --primary-foreground: 240 5.9% 10%;
-        --secondary: 240 3.7% 15.9%;
-        --secondary-foreground: 0 0% 98%;
-        --muted: 240 3.7% 15.9%;
-        --muted-foreground: 240 5% 64.9%;
-        --destructive: 0 62.8% 30.6%;
-        --destructive-foreground: 0 85.7% 97.3%;
-        --border: 240 3.7% 15.9%;
-        --input: 240 3.7% 15.9%;
+    @media (prefers-color-scheme: dark) {
+        :host, /* host for web components */
+        :root {
+            --color-background: oklch(0.145 0 0);
+            --color-foreground: oklch(0.985 0 0);
+            --color-card: oklch(0.205 0 0);
+            --color-card-foreground: oklch(0.985 0 0);
+            --color-popover: oklch(0.269 0 0);
+            --color-popover-foreground: oklch(0.985 0 0);
+            --color-primary: oklch(0.922 0 0);
+            --color-primary-foreground: oklch(0.205 0 0);
+            --color-secondary: oklch(0.269 0 0);
+            --color-secondary-foreground: oklch(0.985 0 0);
+            --color-muted: oklch(0.269 0 0);
+            --color-muted-foreground: oklch(0.708 0 0);
+            --color-accent: oklch(0.371 0 0);
+            --color-accent-foreground: oklch(0.985 0 0);
+            --color-destructive: oklch(0.704 0.191 22.216);
+            --color-destructive-foreground: oklch(1 0 0);
+            --color-border: oklch(1 0 0 / 10%);
+            --color-input: oklch(1 0 0 / 15%);
+        }
     }
-}
-
-/* theme */
-
-@theme {
-    --color-background: hsl(var(--background));
-    --color-foreground: hsl(var(--foreground));
-    --color-primary: hsl(var(--primary));
-    --color-primary-foreground: hsl(var(--primary-foreground));
-    --color-secondary: hsl(var(--secondary));
-    --color-secondary-foreground: hsl(var(--secondary-foreground));
-    --color-muted: hsl(var(--muted));
-    --color-muted-foreground: hsl(var(--muted-foreground));
-    --color-destructive: hsl(var(--destructive));
-    --color-destructive-foreground: hsl(var(--destructive-foreground));
-    --color-border: hsl(var(--border));
-    --color-input: hsl(var(--input));
 }
 
 /* base */
@@ -60,14 +57,6 @@
 @layer base {
     body {
         @apply antialiased bg-background text-foreground;
-    }
-}
-
-/* alpinejs */
-
-@layer utilities {
-    [x-cloak] {
-        @apply hidden;
     }
 }
 
@@ -87,7 +76,7 @@
         @apply text-lg font-semibold tracking-tight;
     }
     .owl-p {
-        @apply leading-7 [&:not(:first-child)]:mt-6;
+        @apply leading-7;
     }
     .owl-anchor {
         @apply font-medium hover:underline hover:underline-offset-4;
@@ -101,22 +90,46 @@
 
 @layer components {
     .owl-card {
-        @apply w-full rounded-lg border border-border bg-background shadow-sm;
+        @apply relative grid gap-4 py-4 w-full rounded-lg border border-border bg-card text-card-foreground;
     }
     .owl-card-header {
-        @apply flex flex-col space-y-1.5 p-6;
+        @apply relative flex flex-col space-y-1.5 px-4;
     }
     .owl-card-title {
-        @apply text-2xl font-semibold leading-none tracking-tight;
+        @apply text-lg font-semibold leading-none tracking-tight;
     }
     .owl-card-description {
         @apply text-sm text-muted-foreground;
     }
+    .owl-card-actions {
+        @apply flex items-center gap-1 absolute top-0 right-4;
+    }
     .owl-card-content {
-        @apply grid gap-4 p-6 pt-0;
+        @apply grid gap-4 px-4;
     }
     .owl-card-footer {
-        @apply flex items-center p-6 pt-0;
+        @apply flex items-center px-4;
+    }
+}
+
+/* dropdown menu */
+
+@layer components {
+    .owl-dropdown-menu {
+        @apply relative inline-flex;
+    }
+    .owl-dropdown-menu-content {
+        @apply z-50 min-w-[8rem] overflow-hidden rounded-md border border-border bg-popover p-1 shadow-md w-56 absolute top-11;
+    }
+    .owl-dropdown-menu-label {
+        @apply px-2 py-1.5 text-sm font-semibold;
+    }
+    .owl-dropdown-menu-separator {
+        @apply -mx-1 my-1 h-px bg-muted;
+    }
+    .owl-dropdown-menu-item {
+        @apply w-full relative flex select-none items-center rounded-sm px-2 py-1.5 text-sm outline-none;
+        @apply hover:bg-accent hover:text-accent-foreground;
     }
 }
 
@@ -127,10 +140,11 @@
         @apply inline-block text-sm font-medium leading-none cursor-pointer;
     }
     .owl-input, .owl-select, .owl-textarea {
-        @apply flex w-full rounded-md border border-input px-3 py-2 text-sm;
+        @apply flex w-full bg-input/30 rounded-md border border-input px-3 py-2 text-sm;
     }
     .owl-input {
-        @apply h-10 file:border-0 file:bg-transparent file:text-sm file:font-medium;
+        @apply h-10;
+        @apply file:border-0 file:bg-transparent file:text-sm file:font-medium;
     }
     .owl-select {
         @apply h-10;
@@ -164,44 +178,30 @@
 
 @layer components {
     .owl-button {
-        @apply inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md h-10 px-4 py-2 text-sm font-medium cursor-pointer bg-primary text-primary-foreground hover:bg-primary/80;
+        @apply inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md h-10 px-4 py-2 text-sm font-medium cursor-pointer bg-primary text-primary-foreground;
+        @apply hover:bg-primary/80;
     }
     .owl-button-icon {
         @apply size-10 p-0 text-base;
     }
     .owl-button-secondary {
-        @apply bg-secondary text-secondary-foreground hover:bg-secondary/80;
+        @apply bg-secondary text-secondary-foreground;
+        @apply hover:bg-secondary/80;
     }
     .owl-button-destructive {
-        @apply bg-destructive text-destructive-foreground hover:bg-destructive/90;
+        @apply bg-destructive text-destructive-foreground;
+        @apply hover:bg-destructive/90;
     }
     .owl-button-outline {
-        @apply bg-transparent text-foreground border border-input hover:bg-secondary/80;
+        @apply bg-transparent text-foreground border border-input;
+        @apply hover:bg-secondary/80;
     }
     .owl-button-ghost {
-        @apply bg-transparent text-foreground hover:bg-secondary/80;
+        @apply bg-transparent text-foreground;
+        @apply hover:bg-secondary/80;
     }
     .owl-button-link {
-        @apply bg-transparent text-foreground hover:bg-transparent hover:underline hover:underline-offset-4;
-    }
-}
-
-/* dropdown menus */
-
-@layer components {
-    .owl-dropdown-menu {
-        @apply relative inline-flex;
-    }
-    .owl-dropdown-menu-content {
-        @apply z-50 min-w-[8rem] overflow-hidden rounded-md border border-border bg-background p-1 shadow-md w-56 absolute;
-    }
-    .owl-dropdown-menu-label {
-        @apply px-2 py-1.5 text-sm font-medium;
-    }
-    .owl-dropdown-menu-separator {
-        @apply -mx-1 my-1 h-px bg-muted;
-    }
-    .owl-dropdown-menu-item {
-        @apply w-full relative flex select-none items-center rounded-sm px-2 py-1.5 text-sm outline-none hover:bg-secondary/80;
+        @apply bg-transparent text-foreground;
+        @apply hover:bg-transparent hover:underline hover:underline-offset-4;
     }
 }

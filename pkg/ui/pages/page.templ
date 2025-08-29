@@ -1,0 +1,32 @@
+package pages
+
+import (
+	"echo.go.dev/pkg/ui/layouts"
+	"echo.go.dev/pkg/ui/lib"
+)
+
+templ PageTemplate(page Page) {
+	@layouts.Base(layouts.Layout{
+		Title: page.Title,
+	}) {
+		@PageBanner(page)
+		<div class="px-5 grid gap-5" hx-boost="true">
+			{ children... }
+		</div>
+	}
+}
+
+var userMenu = []lib.DropdownMenuItem{
+	{Type: lib.DropdownMenuItemTypeLabel, Text: "My Account"},
+	{Type: lib.DropdownMenuItemTypeSeparator},
+	{Type: lib.DropdownMenuItemTypeItem, Text: "logout", Href: "/auth/logout"},
+}
+
+templ PageBanner(page Page) {
+	<header hx-boost="true">
+		<div class="flex p-5 justify-between items-center">
+			<a class="owl-h3" href="/">Echo Boilerplate</a>
+			<ui-dropdown-menu class="owl-dropdown-menu" title="My Account" items={ templ.JSONString(userMenu) } position="right-0 top-[110%]"></ui-dropdown-menu>
+		</div>
+	</header>
+}

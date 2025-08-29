@@ -1,15 +1,7 @@
 package pages
 
-import "echo.go.dev/pkg/ui/layouts"
-
-templ Home() {
-	@layouts.Base(layouts.Layout{
-		Title:      "Home",
-		ShowHeader: true,
-		BodyClass:  "",
-	}) {
-		<div class="p-5">
-			<p class="owl-p">Home</p>
-		</div>
+templ Home(page Page) {
+	@PageTemplate(page) {
+		<p class="owl-p">Home</p>
 	}
 }

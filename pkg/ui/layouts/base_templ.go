@@ -8,18 +8,9 @@ package layouts
 import "github.com/a-h/templ"
 import templruntime "github.com/a-h/templ/runtime"
 
-import "echo.go.dev/pkg/ui/lib"
-
 type Layout struct {
-	Title      string
-	ShowHeader bool
-	BodyClass  string
-}
-
-var userMenu = []lib.DropdownMenuItem{
-	{Type: lib.DropdownMenuItemTypeLabel, Text: "My Account"},
-	{Type: lib.DropdownMenuItemTypeSeparator},
-	{Type: lib.DropdownMenuItemTypeItem, Text: "logout", Href: "/auth/logout"},
+	Title     string
+	BodyClass string
 }
 
 func Base(l Layout) templ.Component {
@@ -50,7 +41,7 @@ func Base(l Layout) templ.Component {
 		var templ_7745c5c3_Var2 string
 		templ_7745c5c3_Var2, templ_7745c5c3_Err = templ.JoinStringErrs(l.Title)
 		if templ_7745c5c3_Err != nil {
-			return templ.Error{Err: templ_7745c5c3_Err, FileName: `pkg/ui/layouts/base.templ`, Line: 25, Col: 38}
+			return templ.Error{Err: templ_7745c5c3_Err, FileName: `pkg/ui/layouts/base.templ`, Line: 16, Col: 38}
 		}
 		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var2))
 		if templ_7745c5c3_Err != nil {
@@ -82,30 +73,11 @@ func Base(l Layout) templ.Component {
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
-		if l.ShowHeader {
-			templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 5, "<header><div class=\"flex p-5 justify-between items-center\"><a class=\"owl-h3 mr-auto\" href=\"/\">Echo Boilerplate</a> <ui-dropdown-menu class=\"owl-dropdown-menu\" title=\"My Account\" items=\"")
-			if templ_7745c5c3_Err != nil {
-				return templ_7745c5c3_Err
-			}
-			var templ_7745c5c3_Var5 string
-			templ_7745c5c3_Var5, templ_7745c5c3_Err = templ.JoinStringErrs(templ.JSONString(userMenu))
-			if templ_7745c5c3_Err != nil {
-				return templ.Error{Err: templ_7745c5c3_Err, FileName: `pkg/ui/layouts/base.templ`, Line: 35, Col: 103}
-			}
-			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var5))
-			if templ_7745c5c3_Err != nil {
-				return templ_7745c5c3_Err
-			}
-			templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 6, "\" position=\"right-0 top-[110%]\"></ui-dropdown-menu></div></header>")
-			if templ_7745c5c3_Err != nil {
-				return templ_7745c5c3_Err
-			}
-		}
 		templ_7745c5c3_Err = templ_7745c5c3_Var1.Render(ctx, templ_7745c5c3_Buffer)
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
-		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 7, "</body></html>")
+		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 5, "</body></html>")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
