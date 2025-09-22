@@ -56,11 +56,6 @@ tasks:
     cmds:
       - go tool esbuild {{.IN}} --bundle --outfile={{.OUT}} --minify --watch
 
-  gen:svelte:
-    desc: "Build Svelte components with esbuild."
-    cmds:
-      - npm run svelte:build
-
   migrate:add:
     desc: "Create a new database migration file."
     vars:

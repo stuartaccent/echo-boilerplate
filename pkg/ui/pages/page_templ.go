@@ -8,10 +8,7 @@ package pages
 import "github.com/a-h/templ"
 import templruntime "github.com/a-h/templ/runtime"
 
-import (
-	"echo.go.dev/pkg/ui/layouts"
-	"echo.go.dev/pkg/ui/lib"
-)
+import "echo.go.dev/pkg/ui/layouts"
 
 func PageTemplate(page Page) templ.Component {
 	return templruntime.GeneratedTemplate(func(templ_7745c5c3_Input templruntime.GeneratedComponentInput) (templ_7745c5c3_Err error) {
@@ -74,12 +71,6 @@ func PageTemplate(page Page) templ.Component {
 	})
 }
 
-var userMenu = []lib.DropdownMenuItem{
-	{Type: lib.DropdownMenuItemTypeLabel, Text: "My Account"},
-	{Type: lib.DropdownMenuItemTypeSeparator},
-	{Type: lib.DropdownMenuItemTypeItem, Text: "logout", Href: "/auth/logout"},
-}
-
 func PageBanner(page Page) templ.Component {
 	return templruntime.GeneratedTemplate(func(templ_7745c5c3_Input templruntime.GeneratedComponentInput) (templ_7745c5c3_Err error) {
 		templ_7745c5c3_W, ctx := templ_7745c5c3_Input.Writer, templ_7745c5c3_Input.Context
@@ -101,20 +92,7 @@ func PageBanner(page Page) templ.Component {
 			templ_7745c5c3_Var3 = templ.NopComponent
 		}
 		ctx = templ.ClearChildren(ctx)
-		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 3, "<header hx-boost=\"true\"><div class=\"flex p-5 justify-between items-center\"><a class=\"owl-h3\" href=\"/\">Echo Boilerplate</a> <ui-dropdown-menu class=\"owl-dropdown-menu\" title=\"My Account\" items=\"")
-		if templ_7745c5c3_Err != nil {
-			return templ_7745c5c3_Err
-		}
-		var templ_7745c5c3_Var4 string
-		templ_7745c5c3_Var4, templ_7745c5c3_Err = templ.JoinStringErrs(templ.JSONString(userMenu))
-		if templ_7745c5c3_Err != nil {
-			return templ.Error{Err: templ_7745c5c3_Err, FileName: `pkg/ui/pages/page.templ`, Line: 29, Col: 100}
-		}
-		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var4))
-		if templ_7745c5c3_Err != nil {
-			return templ_7745c5c3_Err
-		}
-		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 4, "\" position=\"right-0 top-[110%]\"></ui-dropdown-menu></div></header>")
+		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 3, "<header><div class=\"flex p-5 justify-between items-center\"><a class=\"owl-h3\" href=\"/\">Echo Boilerplate</a><div class=\"owl-dropdown-menu\" x-data=\"{\n\t\t\t    opened: false\n\t\t\t}\"><button class=\"owl-button owl-button-ghost\" @click=\"opened = !opened\"><span>My Account</span> <svg class=\"size-4\" xmlns=\"http://www.w3.org/2000/svg\"><use xlink:href=\"/static/svg/icons.svg#chevron-down\"></use></svg></button><div class=\"owl-dropdown-menu-content right-0\" role=\"menu\" x-cloak x-show=\"opened\" x-transition:enter=\"ease-out duration-200\" x-transition:enter-start=\"-translate-y-2\" x-transition:enter-end=\"translate-y-0\" @click.away=\"opened = false\"><div class=\"owl-dropdown-menu-label\">My Account</div><div class=\"owl-dropdown-menu-separator\" role=\"separator\"></div><a href=\"/auth/logout\" class=\"owl-dropdown-menu-item\" role=\"menuitem\">Logout</a></div></div></div></header>")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}

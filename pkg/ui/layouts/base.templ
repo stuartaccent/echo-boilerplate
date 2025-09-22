@@ -15,8 +15,8 @@ templ Base(l Layout) {
 			<meta name="description" content="A no-fuss, Golang-powered boilerplate site built with Echo for quick-as-a-whip loading and dressed up with Tailwind CSS for a clean, modern look. Built right for folks who want speed, simplicity, and style without all the extra fiddle-faddle."/>
 			<title>Echo Boilerplate - { l.Title }</title>
 			<link rel="stylesheet" href="/static/css/global.css"/>
+			<script src="https://unpkg.com/alpinejs" defer></script>
 			<script src="/static/js/htmx.js" defer></script>
-			<script src="/static/js/ui.js" type="module" defer></script>
 		</head>
 		<body class={ l.BodyClass }>
 			{ children... }

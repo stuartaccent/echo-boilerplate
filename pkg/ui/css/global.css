@@ -60,6 +60,13 @@
     }
 }
 
+/* alpinejs */
+@layer utilities {
+    [x-cloak] {
+        @apply hidden;
+    }
+}
+
 /* typography */
 
 @layer components {
